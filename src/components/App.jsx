@@ -10,7 +10,6 @@ import { useEffect, useState } from "react"
 const App = () => {
   const [images, setImages] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
   const [page, setPage] = useState(1)
   const [searchImage, setSearchImage] = useState('')
   const [totalPages, setTotalPages] = useState(0)
@@ -23,7 +22,6 @@ const App = () => {
   const getImages = async () => {
     try {
       setIsLoading(true);
-      setError('');
       const data = await fetchImages(searchImage, page);
       
       if (data.hits.length === 0) {
