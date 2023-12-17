@@ -16,26 +16,25 @@ const App = () => {
 
   useEffect(() => {
     if (!searchImage) return;
-      getImages();
-  }, [searchImage, page])
-
-  const getImages = async () => {
-    try {
-      setIsLoading(true);
-      const data = await fetchImages(searchImage, page);
+    async function getImages() {
+      try {
+        setIsLoading(true);
+        const data = await fetchImages(searchImage, page);
       
-      if (data.hits.length === 0) {
-        Notiflix.Notify.failure('Sorry, there are no images')
+        if (data.hits.length === 0) {
+          Notiflix.Notify.failure('Sorry, there are no images')
+        }
+
+        setImages((prev) => [...prev, ...data.hits]);
+        setTotalPages(Math.floor(data.totalHits / 12));
+      } catch (error) {
+        Notiflix.Notify.failure(error.message);
+      } finally {
+        setIsLoading(false);
       }
-    
-      setImages((prev) => [...prev, ...data.hits]);
-      setTotalPages(Math.floor(data.totalHits / 12));
-    } catch (error) {
-      Notiflix.Notify.failure(error.message);
-    } finally {
-      setIsLoading(false);
     }
-  }
+  getImages()
+  }, [searchImage, page])
 
   const getSearch = (searchImage) => {
     setSearchImage(searchImage);
