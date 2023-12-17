@@ -31,7 +31,7 @@ const App = () => {
       setImages((prev) => [...prev, ...data.hits]);
       setTotalPages(Math.floor(data.totalHits / 12));
     } catch (error) {
-      setError(error.message);
+      Notiflix.Notify.failure(error.message);
     } finally {
       setIsLoading(false);
     }
